@@ -109,8 +109,16 @@ int main( void )
 #define DFL_SRTP_FORCE_PROFILE  0
 #define DFL_SRTP_MKI            ""
 
+#define HELLO_REQUEST
+#ifdef HELLO_REQUEST
+#define GET_REQUEST "%s ## Hello! from PSK client :) "
+#define GET_REQUEST_END "\r\n"
+#else
+
 #define GET_REQUEST "GET %s HTTP/1.0\r\nExtra-header: "
 #define GET_REQUEST_END "\r\n\r\n"
+#endif
+
 
 #if defined(MBEDTLS_X509_CRT_PARSE_C)
 #define USAGE_CONTEXT_CRT_CB \
@@ -2454,6 +2462,7 @@ send_request:
     {
         written = 0;
         frags = 0;
+        buf[0]=' ';
 
         do
         {
@@ -2872,7 +2881,7 @@ send_request:
      * 8. Done, cleanly close the connection
      */
 close_notify:
-    mbedtls_printf( "  . Closing the connection..." );
+    mbedtls_printf( "\n  . Closing the connection..." );
     fflush( stdout );
 
     /*

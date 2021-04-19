@@ -151,12 +151,19 @@ int main( void )
     "06-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah\r\n"  \
     "07-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah</p>\r\n"
 
+#define HELLO_RESPONSE
+#ifdef HELLO_RESPONSE
+#define HTTP_RESPONSE \
+    "  ## Welcome! from mbedTLS Test Server\r\n" \
+    "  ## Successful connection using: %s\r\n" 
+#else
 /* Uncomment LONG_RESPONSE at the end of HTTP_RESPONSE to test sending longer
  * packets (for fragmentation purposes) */
 #define HTTP_RESPONSE \
     "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n" \
     "<h2>mbed TLS Test Server</h2>\r\n" \
     "<p>Successful connection using: %s</p>\r\n" // LONG_RESPONSE
+#endif
 
 /*
  * Size of the basic I/O buffer. Able to hold our default response.
